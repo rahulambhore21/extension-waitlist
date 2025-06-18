@@ -1,66 +1,48 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import Countdown from './components/Countdown';
 import { getTimerEndDate } from './utils/timerUtils';
-import { useMouseParallax } from './hooks/useMouseParallax';
 import CustomCursor from './components/CustomCursor';
-import FutureText from './components/FutureText';
 import PixelRobot from './components/PixelRobot';
-import PixelEffect from './components/PixelEffect';
-import { initHeadingAnimation, initParallaxEffect, createHoverEffect } from './utils/gsapAnimations';
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const robotRef = useMouseParallax();
   const navigationRef = useRef<HTMLDivElement>(null);
+  const robotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const mainTimeline = gsap.timeline({
-      onComplete: () => setIsLoading(false)
-    });
+    if (!containerRef.current || !navigationRef.current || !headingRef.current || !contentRef.current) return;
 
-    if (containerRef.current && navigationRef.current && headingRef.current && contentRef.current && robotRef.current) {
-      // Timeline animations
-      mainTimeline
-        .fromTo(containerRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 1 }
-        )
-        .fromTo(navigationRef.current,
-          { y: -20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.8 },
-          0.2
-        )
-        .fromTo(robotRef.current,
-          { scale: 0.8, opacity: 0, rotationY: -15 },
-          { 
-            scale: 1, 
-            opacity: 1, 
-            rotationY: 0,
-            duration: 1.2, 
-            ease: "elastic.out(1, 0.5)" 
-          },
-          0.8
-        );
+    const mainTimeline = gsap.timeline();
 
-      // Robot hover effect
-      const hoverEffect = createHoverEffect(robotRef.current);
-      robotRef.current.addEventListener('mouseenter', () => hoverEffect.play());
-      robotRef.current.addEventListener('mouseleave', () => hoverEffect.reverse());
+    mainTimeline
+      .fromTo(containerRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 1 }
+      )
+      .fromTo(navigationRef.current,
+        { y: -20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8 },
+        0.2
+      );
 
-      return () => {
-        if (robotRef.current) {
-          robotRef.current.removeEventListener('mouseenter', () => hoverEffect.play());
-          robotRef.current.removeEventListener('mouseleave', () => hoverEffect.reverse());
-        }
-      };
+    // Add animation for robot if it exists
+    if (robotRef.current) {
+      mainTimeline.fromTo(robotRef.current,
+        { scale: 0.9, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.8 },
+        0.4
+      );
     }
-  }, []);
+
+    return () => {
+      mainTimeline.kill();
+    };
+  }, [robotRef]);
 
   return (
     <main ref={containerRef} className="min-h-screen bg-white">

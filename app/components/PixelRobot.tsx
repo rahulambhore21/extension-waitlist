@@ -26,10 +26,10 @@ export default function PixelRobot() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [particles, setParticles] = useState<Particle[]>([]);
   const animationFrameRef = useRef<number | undefined>(undefined);
-
   useEffect(() => {
     if (!containerRef.current) return;
     
+    // Store reference to avoid closure issues during cleanup
     const container = containerRef.current;
     const pixels = container.querySelectorAll('.pixel');
     let isHovered = false;
@@ -59,9 +59,7 @@ export default function PixelRobot() {
       repeat: -1,
       yoyo: true,
       ease: "power1.inOut"
-    });
-
-    const handleMouseEnter = () => {
+    });    const handleMouseEnter = () => {
       isHovered = true;
       gsap.to(pixels, {
         scale: 1.1,
