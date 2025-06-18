@@ -1,11 +1,6 @@
-"use client";
+// This file has been intentionally left empty as it's not needed.
+// Page components should be in the app directory, not in the components directory.
 
-import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import Countdown from './Countdown';
-import { getTimerEndDate } from '../utils/timerUtils';
-import { useMouseParallax } from '../hooks/useMouseParallax';
-import CustomCursor from './CustomCursor';
-import PixelRobot from './PixelRobot';
-
-// This file can be safely deleted as it appears to be a duplicate of the main page.tsx
+export default function Page() {
+  return null;
+}
