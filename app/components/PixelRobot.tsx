@@ -30,7 +30,8 @@ export default function PixelRobot() {
   useEffect(() => {
     if (!containerRef.current) return;
     
-    const pixels = containerRef.current.querySelectorAll('.pixel');
+    const container = containerRef.current;
+    const pixels = container.querySelectorAll('.pixel');
     let isHovered = false;
 
     const createParticle = (x: number, y: number): Particle => ({
@@ -52,7 +53,7 @@ export default function PixelRobot() {
       ease: "back.out(1.2)"
     });
 
-    const floatAnimation = gsap.to(containerRef.current, {
+    const floatAnimation = gsap.to(container, {
       y: "+=20",
       duration: 2,
       repeat: -1,
@@ -74,7 +75,7 @@ export default function PixelRobot() {
       pixels.forEach((pixel: Element) => {
         if (Math.random() > 0.7) {
           const rect = pixel.getBoundingClientRect();
-          const containerRect = containerRef.current!.getBoundingClientRect();
+          const containerRect = container.getBoundingClientRect();
           newParticles.push(createParticle(
             rect.left - containerRect.left,
             rect.top - containerRect.top
@@ -95,33 +96,16 @@ export default function PixelRobot() {
       });
     };
 
-    const animateParticles = () => {
-      if (isHovered) {
-        setParticles(prevParticles => {
-          const updatedParticles = prevParticles.map(p => ({
-            ...p,
-            x: p.x + p.vx,
-            y: p.y + p.vy,
-            life: p.life - 0.02
-          })).filter(p => p.life > 0);
-          
-          return updatedParticles;
-        });
-      }
-      animationFrameRef.current = requestAnimationFrame(animateParticles);
-    };
-
-    containerRef.current.addEventListener('mouseenter', handleMouseEnter);
-    containerRef.current.addEventListener('mouseleave', handleMouseLeave);
-    animateParticles();
+    container.addEventListener('mouseenter', handleMouseEnter);
+    container.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
       floatAnimation.kill();
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
-      containerRef.current?.removeEventListener('mouseenter', handleMouseEnter);
-      containerRef.current?.removeEventListener('mouseleave', handleMouseLeave);
+      container.removeEventListener('mouseenter', handleMouseEnter);
+      container.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, []);
 

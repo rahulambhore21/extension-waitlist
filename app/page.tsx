@@ -24,71 +24,41 @@ export default function Home() {
       onComplete: () => setIsLoading(false)
     });
 
-    if (containerRef.current) {
-      mainTimeline.fromTo(containerRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 1 }
-      );
-    }
+    if (containerRef.current && navigationRef.current && headingRef.current && contentRef.current && robotRef.current) {
+      // Timeline animations
+      mainTimeline
+        .fromTo(containerRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 1 }
+        )
+        .fromTo(navigationRef.current,
+          { y: -20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8 },
+          0.2
+        )
+        .fromTo(robotRef.current,
+          { scale: 0.8, opacity: 0, rotationY: -15 },
+          { 
+            scale: 1, 
+            opacity: 1, 
+            rotationY: 0,
+            duration: 1.2, 
+            ease: "elastic.out(1, 0.5)" 
+          },
+          0.8
+        );
 
-    if (navigationRef.current) {
-      mainTimeline.fromTo(navigationRef.current,
-        { y: -20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8 },
-        0.2
-      );
-    }
-
-    if (headingRef.current) {
-      const heading = headingRef.current;
-      const lines = heading.querySelectorAll('h1 > *');
-      
-      mainTimeline.fromTo(lines, {
-        opacity: 0,
-        y: 100,
-        rotateX: -50,
-      }, {
-        opacity: 1,
-        y: 0,
-        rotateX: 0,
-        duration: 1.5,
-        stagger: 0.2,
-        ease: "power4.out",
-      }, 0.4);
-    }
-
-    if (contentRef.current) {
-      initParallaxEffect(contentRef.current);
-      const elements = contentRef.current.children;
-      mainTimeline.fromTo(elements,
-        { y: 20, opacity: 0 },
-        { 
-          y: 0, 
-          opacity: 1, 
-          duration: 0.8, 
-          stagger: 0.15,
-          ease: "power2.out"
-        },
-        0.6
-      );
-    }
-
-    if (robotRef.current) {
+      // Robot hover effect
       const hoverEffect = createHoverEffect(robotRef.current);
       robotRef.current.addEventListener('mouseenter', () => hoverEffect.play());
       robotRef.current.addEventListener('mouseleave', () => hoverEffect.reverse());
-      
-      mainTimeline.fromTo(robotRef.current,
-        { scale: 0.8, opacity: 0, rotationY: -15 },
-        { 
-          scale: 1, 
-          opacity: 1, 
-          rotationY: 0,
-          duration: 1.2, 
-          ease: "elastic.out(1, 0.5)" 
-        },
-        0.8
-      );
+
+      return () => {
+        if (robotRef.current) {
+          robotRef.current.removeEventListener('mouseenter', () => hoverEffect.play());
+          robotRef.current.removeEventListener('mouseleave', () => hoverEffect.reverse());
+        }
+      };
     }
   }, []);
 
