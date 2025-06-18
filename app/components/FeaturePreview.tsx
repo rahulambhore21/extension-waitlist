@@ -29,19 +29,19 @@ const FeaturePreview = () => {
 
   return (
     <div ref={featuresRef} className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
-      <div className="feature-card bg-white p-6 rounded-lg shadow-lg">
+      <div className="feature-card bg-white p-6 rounded-lg shadow-lg border border-orange-100 hover:border-orange-200 transition-colors duration-300">
         <div className="text-orange-500 text-xl mb-4">🚀</div>
-        <h3 className="font-bold text-xl mb-2">Lightning Fast</h3>
+        <h3 className="font-bold text-xl mb-2 text-gray-800">Lightning Fast</h3>
         <p className="text-gray-600">Experience blazing fast performance with our cutting-edge technology.</p>
       </div>
-      <div className="feature-card bg-white p-6 rounded-lg shadow-lg">
+      <div className="feature-card bg-white p-6 rounded-lg shadow-lg border border-orange-100 hover:border-orange-200 transition-colors duration-300">
         <div className="text-orange-500 text-xl mb-4">🎯</div>
-        <h3 className="font-bold text-xl mb-2">Precise Control</h3>
+        <h3 className="font-bold text-xl mb-2 text-gray-800">Precise Control</h3>
         <p className="text-gray-600">Take full control of your workflow with intuitive tools and interfaces.</p>
       </div>
-      <div className="feature-card bg-white p-6 rounded-lg shadow-lg">
+      <div className="feature-card bg-white p-6 rounded-lg shadow-lg border border-orange-100 hover:border-orange-200 transition-colors duration-300">
         <div className="text-orange-500 text-xl mb-4">🛡️</div>
-        <h3 className="font-bold text-xl mb-2">Enterprise Ready</h3>
+        <h3 className="font-bold text-xl mb-2 text-gray-800">Enterprise Ready</h3>
         <p className="text-gray-600">Built with security and scalability in mind for enterprise deployment.</p>
       </div>
     </div>

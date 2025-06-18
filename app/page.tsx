@@ -93,33 +93,33 @@ export default function Home() {
   }, []);
 
   return (
-    <main ref={containerRef} className={`min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex flex-col ${isLoading ? 'cursor-wait' : ''}`}>
+    <main ref={containerRef} className="min-h-screen bg-white">
       <CustomCursor />
-      <PixelEffect />
-      <nav ref={navigationRef} className={`flex items-center justify-between px-8 py-6 fixed w-full z-50 transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+      
+      <nav ref={navigationRef} className="flex items-center justify-between px-8 py-6 fixed w-full z-50 bg-white/80 backdrop-blur-sm border-b border-orange-100">
         <div className="flex items-center space-x-4">
-          <div className="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
-          <span className="font-mono text-sm text-black/50">sys.ready</span>
+          <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+          <span className="font-mono text-sm text-orange-500">labs</span>
         </div>
-        <button className="text-xs font-mono text-black/50 hover:text-black transition-colors duration-300">
-          menu.toggle()
+        <button className="minimal-button px-4 py-2 text-xs rounded">
+          menu
         </button>
       </nav>
 
       <div className="flex-1 flex items-center justify-center p-8 pt-32">
-        <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div ref={contentRef} className="space-y-12">
             <div ref={headingRef} className="relative z-10 mb-8">
-              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold font-[family-name:var(--font-orbitron)] text-transparent bg-clip-text bg-gradient-to-br from-gray-900 via-gray-800 to-black leading-none tracking-tighter select-none mb-4">
-                TEN
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-400 to-orange-300">SOR</span>
-                <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-orange-400 to-orange-300">
-                  LABS_
+              <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold font-[family-name:var(--font-orbitron)] leading-none tracking-tighter select-none mb-4">
+                <span className="text-orange-500">TEN</span>
+                <span className="text-orange-500">SOR</span>
+                <span className="block mt-2 text-orange-500">
+                  LABS<span className="animate-pulse">.</span>
                 </span>
               </h1>
-              <div className="absolute -z-10 top-0 left-0 w-full h-full blur-3xl opacity-20 bg-gradient-to-br from-orange-500 to-orange-300 transform scale-150"></div>
             </div>
-            <div className="flex items-center space-x-8">
+            
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
               <button 
                 onMouseEnter={() => {
                   gsap.to(".cursor-dot", { scale: 4, duration: 0.3 });
@@ -129,35 +129,43 @@ export default function Home() {
                   gsap.to(".cursor-dot", { scale: 1, duration: 0.3 });
                   gsap.to(".cursor-border", { scale: 1, duration: 0.3 });
                 }}
-                className="group bg-black hover:bg-gray-900 text-white px-6 py-3 rounded-lg font-mono text-sm transition-all duration-500 ease-out hover:pr-12 relative overflow-hidden"
+                className="minimal-button px-8 py-4 rounded-lg text-sm"
               >
-                <span className="relative z-10">join()</span>
-                <span className="absolute right-0 top-0 bottom-0 w-0 bg-orange-500 group-hover:w-2 transition-all duration-500"></span>
+                Join Waitlist
               </button>
               <Countdown targetDate={getTimerEndDate()} />
             </div>
+
+            <div className="glass-card p-6 rounded-lg">
+              <p className="text-orange-500 mb-4 text-sm">Join the revolution in AI development</p>
+              <div className="font-mono text-sm space-y-2 text-gray-600">
+                <div className="flex items-center space-x-2">
+                  <span className="text-orange-500">{'-'}</span>
+                  <span>GPU Acceleration</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-orange-500">{'-'}</span>
+                  <span>Neural Networks</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-orange-500">{'-'}</span>
+                  <span>Real-time Processing</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Right Side - 3D Model */}
           <div ref={robotRef} className="relative h-[600px] w-full">
-            <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-50 rounded-3xl shadow-2xl overflow-hidden relative group perspective-1000">
+            <div className="glass-card w-full h-full rounded-lg overflow-hidden relative">
               <div className="absolute inset-0 flex items-center justify-center">
                 <PixelRobot />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-              <div className="absolute inset-4 border border-black/5 rounded-2xl"></div>
-              <div className="absolute bottom-8 right-8 font-mono text-orange-500/50 text-sm tracking-widest">
-                <span className="animate-pulse">pixel.render()</span>
+              <div className="absolute bottom-6 right-6 font-mono text-orange-500 text-xs">
+                <span className="opacity-50">system ready</span>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-        <div className="absolute -top-48 -right-48 w-96 h-96 bg-orange-500 rounded-full mix-blend-multiply filter blur-[128px] opacity-[0.08]"></div>
-        <div className="absolute -bottom-48 -left-48 w-96 h-96 bg-orange-300 rounded-full mix-blend-multiply filter blur-[128px] opacity-[0.08]"></div>
       </div>
     </main>
   );

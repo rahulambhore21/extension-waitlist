@@ -42,11 +42,17 @@ const Countdown: React.FC<CountdownProps> = ({ targetDate }) => {
   }, []);
 
   return (
-    <div className="flex space-x-4 md:space-x-8">
+    <div className="flex space-x-4 md:space-x-6">
       {Object.entries(timeLeft).map(([key, value]) => (
-        <div key={key} className="countdown-item text-center">
-          <div className="text-3xl md:text-5xl font-bold text-orange-500">{value}</div>
-          <div className="text-sm uppercase tracking-wider text-gray-600">{key}</div>
+        <div key={key} className="countdown-item">
+          <div className="glass-card p-4 rounded-lg">
+            <div className="text-2xl md:text-3xl font-bold text-orange-500 font-mono">
+              {String(value).padStart(2, '0')}
+            </div>
+            <div className="text-[10px] uppercase tracking-widest text-gray-400 mt-1">
+              {key}
+            </div>
+          </div>
         </div>
       ))}
     </div>
