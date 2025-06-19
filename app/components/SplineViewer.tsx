@@ -25,7 +25,7 @@ export default function SplineViewer() {
   return (
     <iframe
       ref={iframeRef}
-      src="https://my.spline.design/genkubgreetingrobot-S6i4mk4BYxNnOHwAdoG9BWFI/"
+      src="https://my.spline.design/nexbotrobotcharacterconcept-Morp165eASGdxvCQwLh5rBAR/"
       frameBorder="0"
       className="w-full h-full absolute inset-0"
       style={{ pointerEvents: 'auto' }}

@@ -24,6 +24,19 @@ export default function Home() {
   const navigationRef = useRef<HTMLDivElement>(null);
   const nameInputRef = useRef<HTMLInputElement>(null);
   const starsRef = useRef<HTMLDivElement>(null);
+  const tensorRef = useRef<HTMLHeadingElement>(null);
+  const spaceRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    // Force scroll to top on client-side only
+    if (typeof window !== 'undefined') {
+      requestAnimationFrame(() => {
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      });
+    }
+  }, []);
 
   useEffect(() => {
     // Create stars for the space effect
@@ -81,6 +94,18 @@ export default function Home() {
         { opacity: 0, scale: 0.95 },
         { opacity: 1, scale: 1, duration: 1.5 },
         0.3
+      )
+      // TENSOR text animation - slide from left with color
+      .fromTo(tensorRef.current,
+        { x: -200, opacity: 0, color: 'rgba(0, 0, 0, 0.1)' },
+        { x: 0, opacity: 1, color: '#f97316', duration: 1.2, ease: "power2.out" },
+        1
+      )
+      // SPACE text animation - slide from right with color
+      .fromTo(spaceRef.current,
+        { x: 200, opacity: 0, color: 'rgba(0, 0, 0, 0.1)' },
+        { x: 0, opacity: 1, color: '#000000', duration: 1.2, ease: "power2.out" },
+        1
       )
       // Robot showcase text elements
       .fromTo(".showcase-badge",
@@ -152,7 +177,7 @@ export default function Home() {
   };
 
   return (
-    <main ref={containerRef} className="min-h-screen bg-black relative overflow-hidden">
+    <main ref={containerRef} className="min-h-screen bg-white relative overflow-hidden">
       <CustomCursor />
       <PixelEffect />
       
@@ -160,20 +185,18 @@ export default function Home() {
       <div ref={starsRef} className="absolute inset-0 z-0 pointer-events-none overflow-hidden"></div>
       
       {/* Robot as fullscreen background */}
-      <div className="absolute inset-0 w-full h-full z-0">
-        <iframe className="robot-iframe" src='https://my.spline.design/nexbotrobotcharacterconcept-VI9L97Q8wbqPZp7iTSBMGqcH/' frameBorder='0' width='100%' height='100%'></iframe>
+      <div className="fixed inset-0 w-full h-full z-0">
+        <iframe className="robot-iframe w-full h-full" src='https://my.spline.design/nexbotrobotcharacterconcept-Morp165eASGdxvCQwLh5rBAR/' frameBorder='0'></iframe>
       </div>
       
-      {/* Subtle gradient for navbar */}
-      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/50 to-transparent z-10 pointer-events-none"></div>
       
-      <nav ref={navigationRef} className="flex items-center justify-between px-8 py-6 fixed w-full z-50 bg-transparent backdrop-blur-sm">
+      <nav ref={navigationRef} className="flex items-center justify-between px-8 py-6 fixed w-full z-50 navbar-glass">
         <div className="flex items-center space-x-4 group">
           <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse group-hover:scale-150 transition-transform duration-300"></div>
           <span className="font-mono text-sm text-orange-500 font-medium group-hover:tracking-wider transition-all duration-300">tensor labs</span>
         </div>
         <button 
-          className="px-4 py-2 text-xs rounded-full text-black/90 border border-white/20 hover:border-orange-500/50 hover:text-orange-500 transition-all duration-300 hover:px-5"
+          className="px-4 py-2 text-xs rounded-full text-black/80 border border-black/10 hover:border-orange-500/50 hover:text-orange-500 transition-all duration-300 hover:px-5 backdrop-blur-sm bg-white/10"
           onMouseEnter={() => {
             gsap.to(".cursor-dot", { scale: 3, duration: 0.3 });
             gsap.to(".cursor-border", { scale: 1.5, duration: 0.3 });
@@ -188,22 +211,20 @@ export default function Home() {
       </nav>
 
       {/* Robot Showcase Area - Full height section to display robot */}
-      <div className="h-screen flex items-center justify-center relative robot-showcase">
-        <div className="text-center relative z-10">
-          <div className="mb-8">
-            <div className="showcase-badge inline-block px-4 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/30 text-xs text-white font-mono tracking-widest uppercase">
-              Coming Soon
-            </div>
-          </div>
-          <h1 className="showcase-title text-5xl sm:text-6xl md:text-7xl font-bold font-[family-name:var(--font-orbitron)] leading-none tracking-tighter select-none mb-8">
-            <span className="text-white text-shadow-glow">TENSOR</span>
-            <span className="block mt-3">
-              <span className="text-orange-500">WORKSPACE</span>
-            </span>
+      <div className="h-screen flex items-center justify-center relative robot-showcase" style={{ marginTop: 0 }}>
+        <div className="absolute left-10 top-1/2 -translate-y-1/2 z-10">
+          <h1 ref={tensorRef} className="text-8xl font-bold heading-font opacity-0">
+            TENSOR
           </h1>
-          <p className="showcase-tagline text-white/60 max-w-md mx-auto mb-12 text-lg">
-            The future of browser productivity
-          </p>
+        </div>
+        
+        <div className="absolute right-10 top-1/2 -translate-y-1/2 z-10">
+          <h1 ref={spaceRef} className="text-8xl font-bold heading-font opacity-0">
+            SPACE
+          </h1>
+        </div>
+
+        <div className="text-center relative z-10">
           <div 
             className="scroll-arrow mt-20 cursor-pointer" 
             onClick={() => {
@@ -224,125 +245,8 @@ export default function Home() {
       {/* Main content area */}
       <div className="flex flex-col justify-center relative z-10 px-4 pt-8 pb-20">
         <div className="w-full max-w-6xl mx-auto">
-          
-          {/* Form Section - Taking full width at top */}
-          <div id="form-section" className="w-full mb-20 scroll-mt-20">
-            <div className="text-center mb-10 content-intro">
-              <div className="inline-block px-6 py-2 rounded-full bg-orange-500/20 border border-orange-500/30 text-base text-orange-400 font-mono mb-4">
-                Join the journey
-              </div>
-              <h2 className="text-2xl font-semibold text-white">Help us name our revolutionary browser workspace</h2>
-            </div>
-            <div ref={contentRef} className="w-full bg-white/10 backdrop-blur-md rounded-2xl border border-white/40 shadow-2xl overflow-hidden">
-              <div className="px-8 py-10">
-                <div className="space-y-8">
-                  <div ref={headingRef} className="relative z-10 mb-6 text-center">
-                    <div className="inline-block px-4 py-1 rounded-full bg-orange-500/20 border border-orange-500/30 text-xs text-orange-400 font-mono mb-4 tracking-widest uppercase font-bold">Naming Competition</div>
-                    <h1 className="text-3xl sm:text-5xl font-bold font-[family-name:var(--font-orbitron)] leading-none tracking-tighter select-none mb-6">
-                      <span className="text-black text-shadow-glow">NAME</span>
-                      <span className="block mt-2">
-                        <span className="text-orange-500">THE WORKSPACE</span>
-                      </span>
-                    </h1>
-                    <p className="text-black text-sm mt-4 max-w-lg mx-auto">
-                      What would you name the <span className="text-orange-300 font-semibold">coziest workspace</span> on the internet? 
-                      The top 3 names win exclusive prizes!
-                    </p>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <form onSubmit={handleNameSubmit} className="space-y-6">
-                      <div className="relative">
-                        <label htmlFor="name" className="text-sm font-medium text-black mb-2 flex items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                          </svg>
-                          First, what's your name?
-                        </label>
-                        <div className="relative group">
-                          <input
-                            ref={nameInputRef}
-                            type="text"
-                            id="name"
-                            className="w-full p-4 pl-5 bg-white/5 border border-white/40 focus:border-orange-500 rounded-lg focus:outline-none text-black transition-all duration-300 group-hover:border-white/60"
-                            placeholder="Enter your name to continue"
-                            value={userName}
-                            onChange={(e) => {
-                              setUserName(e.target.value);
-                              setNameError('');
-                            }}
-                          />
-                          <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-orange-500/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                            </svg>
-                          </div>
-                        </div>
-                        {nameError && <p className="mt-2 text-sm text-orange-300 flex items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                          </svg>
-                          {nameError}
-                        </p>}
-                      </div>
-                      
-                      <button 
-                        type="submit"
-                        onMouseEnter={() => {
-                          gsap.to(".cursor-dot", { scale: 4, duration: 0.3 });
-                          gsap.to(".cursor-border", { scale: 1.5, duration: 0.3 });
-                        }}
-                        onMouseLeave={() => {
-                          gsap.to(".cursor-dot", { scale: 1, duration: 0.3 });
-                          gsap.to(".cursor-border", { scale: 1, duration: 0.3 });
-                        }}
-                        className="bg-orange-500 text-black w-full px-6 py-4 rounded-lg text-sm font-medium group hover:bg-orange-600 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/20 transform hover:-translate-y-1"
-                      >
-                        <span className="flex items-center justify-center">
-                          Join Naming Competition 
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                          </svg>
-                        </span>
-                      </button>
-                      
-                      <div className="pt-4">
-                        <div className="text-xs uppercase tracking-widest text-black/70 mb-3 text-center font-medium">Competition ends in</div>
-                        <Countdown targetDate={getTimerEndDate()} />
-                      </div>
-                    </form>
-                    
-                    <div className="bg-white/5 backdrop-blur-md p-6 rounded-lg border border-white/40">
-                      <h3 className="text-orange-400 mb-5 text-base font-medium flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                        </svg>
-                        Top 3 winners receive
-                      </h3>
-                      <div className="font-mono text-sm space-y-3 text-black/90">
-                        <div className="flex items-start space-x-3 bg-white/10 p-3 rounded-lg border-l-2 border-orange-500/50 hover:border-orange-500 transition-colors group">
-                          <span className="text-orange-500 mt-0.5 opacity-80 group-hover:opacity-100">•</span>
-                          <span>6 months <span className="text-black font-bold">free premium access</span></span>
-                        </div>
-                        <div className="flex items-start space-x-3 bg-white/10 p-3 rounded-lg border-l-2 border-orange-500/50 hover:border-orange-500 transition-colors group">
-                          <span className="text-orange-500 mt-0.5 opacity-80 group-hover:opacity-100">•</span>
-                          <span>1:1 call with the <span className="text-black font-bold">founder</span></span>
-                        </div>
-                        <div className="flex items-start space-x-3 bg-white/10 p-3 rounded-lg border-l-2 border-orange-500/50 hover:border-orange-500 transition-colors group">
-                          <span className="text-orange-500 mt-0.5 opacity-80 group-hover:opacity-100">•</span>
-                          <span>"Named by <span className="text-black font-bold">YOU</span>" credit in final product</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Video Preview Section - Full width at bottom */}
-          <div id="video-section" className="w-full">
+          {/* Video Preview Section - Moved to top */}
+          <div id="video-section" className="w-full mb-20">
             <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/40 shadow-2xl overflow-hidden p-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div>
@@ -403,6 +307,119 @@ export default function Home() {
                     posterSrc="/video-poster.jpg"
                     className="h-[400px] w-full rounded-lg shadow-xl"
                   />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Name Suggestion Form */}
+          <div id="form-section" className="w-full scroll-mt-20">
+            <div className="text-center mb-10 content-intro">
+              <div className="inline-block px-6 py-2 rounded-full bg-orange-500/20 border border-orange-500/30 text-base text-orange-600 font-mono mb-4">
+                Join the journey
+              </div>
+              <h2 className="text-2xl font-semibold text-black">Help us name our revolutionary browser workspace</h2>
+            </div>
+            <div ref={contentRef} className="w-full bg-white/80 backdrop-blur-md rounded-2xl border border-white shadow-2xl overflow-hidden">
+              <div className="px-8 py-10">
+                <div className="space-y-8">
+                  <div ref={headingRef} className="relative z-10 mb-6 text-center">
+                    <div className="inline-block px-4 py-1 rounded-full bg-orange-500/20 border border-orange-500/30 text-xs text-orange-400 font-mono mb-4 tracking-widest uppercase font-bold">Naming Competition</div>
+                    <h1 className="text-3xl sm:text-5xl font-bold font-[family-name:var(--font-orbitron)] leading-none tracking-tighter select-none mb-6">
+                      <span className="text-black text-shadow-glow">NAME</span>
+                      <span className="block mt-2">
+                        <span className="text-orange-500">THE WORKSPACE</span>
+                      </span>
+                    </h1>
+                    <p className="text-black text-sm mt-4 max-w-lg mx-auto">
+                      What would you name the <span className="text-orange-300 font-semibold">coziest workspace</span> on the internet? 
+                      The top 3 names win exclusive prizes!
+                    </p>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <form onSubmit={handleNameSubmit} className="space-y-8">
+                      <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-black mb-2">
+                          First, what's your name?
+                        </label>
+              <div className="relative group">
+                            <input
+                              ref={nameInputRef}
+                              type="text"
+                              id="name"
+                              value={userName}
+                              onChange={(e) => {
+                                setUserName(e.target.value);
+                                setNameError('');
+                              }}
+                              className="w-full p-4 pl-5 bg-white/5 border border-white/40 focus:border-orange-500 rounded-lg focus:outline-none text-black transition-all duration-300 group-hover:border-white/60"
+                              placeholder="Enter your name to continue"
+                              maxLength={20}
+                            />
+                            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-orange-500/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                              </svg>
+                            </div>
+                          </div>
+                        {nameError && (
+                          <p className="mt-2 text-sm text-orange-400">{nameError}</p>
+                        )}
+                      </div>
+
+                      <div className="flex justify-center">
+                        <button 
+                          type="submit"
+                          className="bg-orange-500 text-black w-full px-6 py-4 rounded-lg text-sm font-medium group hover:bg-orange-600 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/20 transform hover:-translate-y-1"
+                          onMouseEnter={() => {
+                            gsap.to(".cursor-dot", { scale: 4, duration: 0.3 });
+                            gsap.to(".cursor-border", { scale: 1.5, duration: 0.3 });
+                          }}
+                          onMouseLeave={() => {
+                            gsap.to(".cursor-dot", { scale: 1, duration: 0.3 });
+                            gsap.to(".cursor-border", { scale: 1, duration: 0.3 });
+                          }}
+                        >
+                          <span className="flex items-center justify-center">
+                            Join Naming Competition 
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                          </span>
+                        </button>
+                      </div>
+                      
+                      <div className="pt-4">
+                        <div className="text-xs uppercase tracking-widest text-black/70 mb-3 text-center font-medium">Competition ends in</div>
+                        <Countdown targetDate={getTimerEndDate()} />
+                      </div>
+                    </form>
+                    
+                    <div className="bg-white/5 backdrop-blur-md p-6 rounded-lg border border-white/40">
+                      <h3 className="text-orange-400 mb-5 text-base font-medium flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                        Top 3 winners receive
+                      </h3>
+                      <div className="font-mono text-sm space-y-3 text-black/90">
+                        <div className="flex items-start space-x-3 bg-white/10 p-3 rounded-lg border-l-2 border-orange-500/50 hover:border-orange-500 transition-colors group">
+                          <span className="text-orange-500 mt-0.5 opacity-80 group-hover:opacity-100">•</span>
+                          <span>6 months <span className="text-black font-bold">free premium access</span></span>
+                        </div>
+                        <div className="flex items-start space-x-3 bg-white/10 p-3 rounded-lg border-l-2 border-orange-500/50 hover:border-orange-500 transition-colors group">
+                          <span className="text-orange-500 mt-0.5 opacity-80 group-hover:opacity-100">•</span>
+                          <span>1:1 call with the <span className="text-black font-bold">founder</span></span>
+                        </div>
+                        <div className="flex items-start space-x-3 bg-white/10 p-3 rounded-lg border-l-2 border-orange-500/50 hover:border-orange-500 transition-colors group">
+                          <span className="text-orange-500 mt-0.5 opacity-80 group-hover:opacity-100">•</span>
+                          <span>"Named by <span className="text-black font-bold">YOU</span>" credit in final product</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

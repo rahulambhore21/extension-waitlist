@@ -2,11 +2,97 @@
 
 /* styles/globals.css */
 @font-face {
-  font-family: 'MyCustomFont';
-  src: url('/fonts/theseason-reg.otf') format('otf');
+  font-family: 'Plank';
+  src: url('/Font/PLANK___.TTF') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
+}
+
+/* Form Styles */
+.form-input {
+  width: 100%;
+  padding: 1rem;
+  padding-left: 1.25rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 0.5rem;
+  outline: none;
+  color: black;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: rgb(249, 115, 22);
+}
+
+.form-input-group:hover .form-input {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: black;
+  margin-bottom: 0.5rem;
+}
+
+.form-error {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: rgb(249, 115, 22);
+}
+
+.form-button {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background-color: rgb(249, 115, 22);
+  color: black;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.form-button:hover {
+  background-color: rgb(234, 88, 12);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(249, 115, 22, 0.2);
+}
+
+.form-container {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem;
+  border: 1px solid white;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.form-checkbox {
+  height: 1rem;
+  width: 1rem;
+  color: rgb(249, 115, 22);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.form-checkbox:focus {
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.4);
+}
+
+.form-checkbox-label {
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.8);
+  display: block;
+}
+
+.heading-font {
+  font-family: 'Plank', sans-serif;
 }
 
 :root {
@@ -214,4 +300,85 @@ html {
 .content-intro,
 #video-section {
   opacity: 0;
+}
+
+.writing-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.navbar-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1), 
+              inset 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.navbar-glass:hover {
+  border-color: rgba(255, 107, 44, 0.3);
+  box-shadow: 0 4px 30px rgba(255, 107, 44, 0.1),
+              inset 0 0 15px rgba(255, 107, 44, 0.05);
+}
+
+/* Form input styles */
+.form-input-group {
+  position: relative;
+}
+
+.form-input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 0.5rem;
+  color: black;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2);
+}
+
+.form-input:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: black;
+  margin-bottom: 0.5rem;
+}
+
+.form-error {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+}
+
+.form-button {
+  background: var(--primary);
+  color: black;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.form-button:hover {
+  background: #ea580c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
 }

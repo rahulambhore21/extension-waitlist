@@ -25,10 +25,10 @@ const SplineRobot: React.FC<SplineRobotProps> = ({ className = '' }) => {
   return (
     <div
       ref={containerRef}
-      className={`w-full h-[600px] relative overflow-hidden rounded-lg shadow-lg ${className}`}
+      className={`w-8 h-[100px] relative overflow-hidden rounded-lg shadow-lg ${className}`}
     >
       <iframe
-        src='https://my.spline.design/nexbotrobotcharacterconcept-VI9L97Q8wbqPZp7iTSBMGqcH/'
+        src='https://my.spline.design/nexbotrobotcharacterconcept-Morp165eASGdxvCQwLh5rBAR/'
         frameBorder='0'
         width='100%'
         height='100%'
