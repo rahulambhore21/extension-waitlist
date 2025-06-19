@@ -39,17 +39,15 @@ const Countdown: React.FC<CountdownProps> = ({ targetDate }) => {
       stagger: 0.2,
       ease: "power3.out"
     });
-  }, []);
-
-  return (
-    <div className="flex space-x-4 md:space-x-6">
+  }, []);  return (
+    <div className="flex space-x-4 justify-center">
       {Object.entries(timeLeft).map(([key, value]) => (
         <div key={key} className="countdown-item">
-          <div className="glass-card p-4 rounded-lg">
-            <div className="text-2xl md:text-3xl font-bold text-orange-500 font-mono">
+          <div className="bg-white/10 p-4 rounded-lg border border-white/40 hover:border-orange-500/50 transition-colors shadow-lg shadow-black/10 group">
+            <div className="text-2xl md:text-3xl font-bold text-orange-500 font-mono text-center group-hover:scale-110 transition-transform">
               {String(value).padStart(2, '0')}
             </div>
-            <div className="text-[10px] uppercase tracking-widest text-gray-400 mt-1">
+            <div className="text-[10px] uppercase tracking-widest text-white/80 mt-1 text-center">
               {key}
             </div>
           </div>

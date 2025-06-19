@@ -46,10 +46,9 @@ export default function CustomCursor() {
       document.removeEventListener('mouseleave', onMouseLeave);
     };
   }, []);
-
   return (
     <>
-      <div ref={cursorRef} className="hidden md:block fixed pointer-events-none w-16 h-16 rounded-full border border-orange-500/30 transition-transform duration-200 z-50" style={{ opacity: 0 }} />
+      <div ref={cursorRef} className="hidden md:block fixed pointer-events-none w-16 h-16 rounded-full border border-orange-500/50 transition-transform duration-200 z-50" style={{ opacity: 0 }} />
       <div ref={cursorDotRef} className="hidden md:block fixed pointer-events-none w-1 h-1 bg-orange-500 rounded-full z-50" style={{ opacity: 0 }} />
     </>
   );

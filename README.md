@@ -34,3 +34,9 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+// filepath: c:\Rahul\Coding\Client\Tensor Boy\waitlist-web\public\video-poster.jpg
+// This file should be a screenshot of the workspace extension in action.
+// Dimensions: 1280x720px, showing a clean browser interface with the extension active.
+// The image should feature a distraction-free workspace with multiple tabs organized.
+// Key visual elements: Dark mode interface, orange accent colors, and a clean layout.

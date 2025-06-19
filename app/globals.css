@@ -1,28 +1,41 @@
 @import "tailwindcss";
 
+/* styles/globals.css */
+@font-face {
+  font-family: 'MyCustomFont';
+  src: url('/fonts/theseason-reg.otf') format('otf');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --background: #ffffff;
+  --background: #040818;
   --primary: #ff6b2c;
-  --text-primary: #1a1a1a;
-  --text-secondary: #4a4a4a;
+  --primary-glow: #ff6b2c80;
+  --text-primary: #ffffff;
+  --text-secondary: #eeeeee;
 }
 
 body {
   background: var(--background);
   color: var(--text-primary);
-  font-family: var(--font-mono);
+  font-family: "theseason-reg",var(--font-mono);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 107, 44, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   transition: all 0.3s ease;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2), 
+              inset 0 0 10px rgba(255, 255, 255, 0.05);
 }
 
 .glass-card:hover {
-  border-color: rgba(255, 107, 44, 0.3);
-  box-shadow: 0 0 20px rgba(255, 107, 44, 0.1);
+  border-color: rgba(255, 107, 44, 0.5);
+  box-shadow: 0 0 30px rgba(255, 107, 44, 0.2),
+              inset 0 0 15px rgba(255, 107, 44, 0.05);
 }
 
 .text-gradient {
@@ -33,13 +46,172 @@ body {
 }
 
 .minimal-button {
-  background: transparent;
+  background: rgba(255, 107, 44, 0.1);
   border: 1px solid var(--primary);
   color: var(--primary);
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.minimal-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: var(--primary);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  z-index: -1;
 }
 
 .minimal-button:hover {
-  background: var(--primary);
   color: white;
+  box-shadow: 0 0 20px rgba(255, 107, 44, 0.3);
+}
+
+.minimal-button:hover::before {
+  width: 100%;
+}
+
+.text-shadow-glow {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.9), 
+               0 0 20px rgba(255, 107, 44, 0.5),
+               0 0 40px rgba(255, 107, 44, 0.3);
+}
+
+.content-card {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7),
+              inset 0 0 20px rgba(255, 107, 44, 0.05);
+  border-radius: 1rem;
+  padding: 2.5rem;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: twinkle 4s infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.8; }
+}
+
+.cosmic-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.15;
+  background: radial-gradient(circle, 
+    rgba(255, 107, 44, 0.7),
+    rgba(255, 197, 155, 0.5),
+    rgba(255, 107, 44, 0.3)
+  );
+}
+
+.space-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.space-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(255, 107, 44, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes pulse-border {
+  0%, 100% { border-color: rgba(255, 255, 255, 0.2); }
+  50% { border-color: rgba(255, 107, 44, 0.5); }
+}
+
+.pulse-border {
+  animation: pulse-border 2s infinite;
+}
+
+.floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+nav.scrolled {
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+.scroll-mt-20 {
+  scroll-margin-top: 5rem;
+}
+
+/* Robot showcase styles */
+@keyframes subtle-float {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-15px) rotate(1deg); }
+}
+
+.robot-showcase {
+  position: relative;
+}
+
+.robot-showcase h1 {
+  animation: subtle-float 6s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* GSAP animation helpers */
+.scroll-arrow {
+  animation: none; /* Override default bounce animation since we're using GSAP */
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 0.7; }
+}
+
+.showcase-badge {
+  animation: pulse-subtle 4s infinite;
+}
+
+/* Stagger animations for list items */
+.feature-item {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Ensure elements hidden by GSAP don't flash before JS loads */
+.robot-iframe,
+.showcase-badge,
+.showcase-title,
+.showcase-tagline,
+.scroll-arrow,
+.content-intro,
+#video-section {
+  opacity: 0;
 }
