@@ -9,18 +9,18 @@ interface SplineRobotProps {
 
 const SplineRobot: React.FC<SplineRobotProps> = ({ className = '' }) => {
   const containerRef = React.useRef<HTMLDivElement>(null);
-  const { animateElement } = useGsapAnimation();
+  const { animateElements } = useGsapAnimation();
 
   React.useEffect(() => {
     if (containerRef.current) {
-      animateElement(containerRef.current, {
-        opacity: [0, 1],
-        scale: [0.8, 1],
+      animateElements([containerRef.current], {
+        opacity: 1,
+        scale: 1,
         duration: 1,
         ease: 'power2.out'
       });
     }
-  }, [animateElement]);
+  }, [animateElements]);
 
   return (
     <div

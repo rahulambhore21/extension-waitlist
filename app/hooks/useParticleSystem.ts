@@ -22,7 +22,7 @@ const COLORS = [
 
 export const useParticleSystem = () => {
   const [particles, setParticles] = useState<Particle[]>([]);
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number>(null);
 
   const createParticle = useCallback((x: number, y: number): Particle => ({
     x,

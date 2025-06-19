@@ -2,7 +2,7 @@ import { useState, useRef, useCallback } from 'react';
 
 export const useGlitchEffect = (duration: number = 150) => {
   const [isGlitching, setIsGlitching] = useState(false);
-  const glitchTimeoutRef = useRef<NodeJS.Timeout>();
+  const glitchTimeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
 
   const triggerGlitch = useCallback(() => {
     setIsGlitching(true);

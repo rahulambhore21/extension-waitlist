@@ -6,7 +6,7 @@ interface AnimationConfig {
   opacity?: number;
   duration?: number;
   stagger?: {
-    from?: string | number;
+    from?: "start" | "center" | "end" | "edges" | "random" | number | [number, number];
     amount?: number;
   };
   ease?: string;
@@ -15,7 +15,7 @@ interface AnimationConfig {
 }
 
 export const useGsapAnimation = () => {
-  const animationRef = useRef<gsap.core.Timeline>();
+  const animationRef = useRef<gsap.core.Timeline>(null);
 
   const animateElements = useCallback((elements: Element[], config: AnimationConfig) => {
     if (animationRef.current) {
